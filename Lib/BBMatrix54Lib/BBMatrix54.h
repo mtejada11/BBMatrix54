@@ -12,7 +12,7 @@
 
 //---------- DISPLAY CLASS ----------
 
-// Purpose: To abstract the BBGame114 LED matrix as a display, 
+// Purpose: To abstract the BBMatrix54 LED matrix as a display, 
 // with methods/functions to Clear the display, draw a dot,
 // draw horizontal or vertical lines and draw text.
 
@@ -20,73 +20,55 @@
 class Display
 {
 public:
-void Setup(byte _numCols, byte _numRows);
-void Clear();
-static byte MakeBit(byte y);
-byte SetPixel(byte x, byte y, byte c = 1);
-void SetByte(byte x, byte bits);
-void vLine(byte x, byte y1 = 255, byte y2 = 255);
-void hLine(byte y, byte x1 = 255, byte x2 = 255);
-void hShift(byte dir = 0, bool wrap = false);
-void vShift(byte dir = 0, bool wrap = false);
-byte numCols;
-byte numRows;
-void SetSlowdown(byte factor);
+  void Setup(byte _numCols, byte _numRows);
+  void Clear();
+
+  static byte MakeBit(byte y);
+  byte SetPixel(byte x, byte y, byte c = 1);
+  void SetByte(byte x, byte bits);
+  void vLine(byte x, byte y1 = 255, byte y2 = 255);
+  void hLine(byte y, byte x1 = 255, byte x2 = 255);
+  void hShift(byte dir = 0, bool wrap = false);
+  void vShift(byte dir = 0, bool wrap = false);
+
+  byte numCols;
+  byte numRows;
+
+  void SetSlowdown(byte factor);
 
 private:
-    void SetupTimedRefresh();
+  void SetupTimedRefresh();
 };
 
 
 //---------- BUTTONS CLASS ----------
 
 // Purpose: To simplify the use of the pushbuttons on the 
-// BBGame114 board. The BtnPressed() method/function only 
+// BBMatrix54 board. The BtnPressed() method/function only 
 // returns true one time after a buttons is pressed, and it 
 // is not reset until the button is released.
 
 
 #define BTN1 0
 #define BTN2 1
-#define BTN3 2
-
 
 class Buttons
 {
 public:
     void Setup();
     bool BtnPressed(byte i);
-
+    bool BtnDown(byte i);
 private:
-  bool btnWasNotPressed[3];
-};
-
-
-//---------- SOUND CLASS ----------
-
-// Purpose: To output sound tones through the piezoelectric
-// speaker on the the BBGame114 board.
-
-
-#define SNDPIN 10
-
-class Sound
-{
-public:
-    void Setup();
-    void Update(int counter);
-    void StartSound(byte _tone, byte _duration, bool _noisy = false);
-private:
-  byte tone;
-  byte duration;
-  bool noisy;
+  bool btnDown[2];
+  bool btnWasNotPressed[2];
+  void ReadButtons();
 };
 
 
 //---------- TEXTDISPLAY CLASS ----------
 
 // Purpose: To draw alphanumeric characters and punctuation on the
-// BBGame114 display.
+// BBMatrix54 display.
 
 
 class TextDisplay
@@ -107,4 +89,3 @@ private:
 
 
 #endif //LIBHARDWARE_H
-

@@ -8,15 +8,16 @@
 
 //---------- DISPLAY CLASS ----------
 
-// Purpose: To abstract the BBGame114 LED matrix as a display, 
+// Purpose: To abstract the BBMatrix54 LED matrix as a display, 
 // with methods/functions to clear the display, draw a dot,
 // draw horizontal or vertical lines and draw text.
 
 
+#define COLUMNS 5
+byte displayCols[COLUMNS] = { 2, 3, 4, 5, 6 };
 byte displayRows[4] = { 9, 8, A4, A3 };
-byte displayCols[11] = { 2, 3, 4, 5, 6, 12, 12, 12, 12, 12, 12 };
 
-byte displayBuffer[11];
+byte displayBuffer[COLUMNS];
 int  displayCounter = 0;
 byte displaySlowdownFactor = 1;
 byte displayScanRow = 0;
@@ -27,11 +28,11 @@ void Display::Setup(byte _numCols, byte _numRows)
 {
   numCols = _numCols;
   numRows = _numRows;
-  if(numCols > 11) numCols = 11;
+  if(numCols > COLUMNS) numCols = COLUMNS;
   if(numRows > 4)  numRows = 4;
 
   int i,j;
-  for(i = 0; i < 11; i++) pinMode(displayCols[i], OUTPUT);
+  for(i = 0; i < COLUMNS; i++) pinMode(displayCols[i], OUTPUT);
   for(j = 0; j < 4; j++)  pinMode(displayRows[j], OUTPUT);
   Clear();
 
@@ -180,13 +181,13 @@ SIGNAL(TIMER2_COMPA_vect)
   digitalWrite(displayRows[1], 1);
   digitalWrite(displayRows[2], 1);
   digitalWrite(displayRows[3], 1);
-  for(byte i = 0; i < 11; i++)
+  for(byte i = 0; i < COLUMNS; i++)
     digitalWrite(displayCols[i], 0);
 
   digitalWrite(displayRows[j], 0);
   byte *p = displayBuffer;
   byte mask = 8 >> j; 
-  for(byte i = 0; i < 11; i++)
+  for(byte i = 0; i < COLUMNS; i++)
     digitalWrite(displayCols[i], ((*(p++)) & mask) ? 1 : 0);
 
   noInterrupts();
@@ -199,82 +200,60 @@ SIGNAL(TIMER2_COMPA_vect)
 //---------- BUTTONS CLASS ----------
 
 // Purpose: To simplify the use of the pushbuttons on the 
-// BBGame114 board. The BtnPressed() method/function only 
+// BBMatrix54 board. The BtnPressed() method/function only 
 // returns true one time after a buttons is pressed, and it 
 // is not reset until the button is released.
 
 
-byte buttonPins[3] = { A0, A7, A6 };
+static const byte buttonPins[2] = { A0, A5 };
 
 
 void Buttons::Setup()
 {
-    for(byte i = 0; i < 3; i++)
-    {
-        pinMode(buttonPins[i], INPUT);
-        btnWasNotPressed[i] = true;
-    }
+  pinMode(buttonPins[0], INPUT);
+  pinMode(buttonPins[1], INPUT_PULLUP);
+
+  for (byte i = 0; i < 2; i++)
+    btnWasNotPressed[i] = true;
+}
+
+
+void Buttons::ReadButtons()
+{
+  btnDown[0] = (digitalRead(buttonPins[0]) == 1);
+  btnDown[1] = (digitalRead(buttonPins[1]) == 0);
 }
 
 
 bool Buttons::BtnPressed(byte i)
 {
-    bool BtnPressedNow = analogRead(buttonPins[i])>30;
-    if(btnWasNotPressed[i] && BtnPressedNow)
-    {
-      btnWasNotPressed[i] = false;
-      return true;
-    }
-    else
-    {
-      if(!BtnPressedNow)
-        btnWasNotPressed[i] = true;
-      return false;
-    }
-}
+  bool BtnPressedNow = BtnDown(i);
 
-
-//---------- SOUND CLASS ----------
-
-// Purpose: To output sound tones through the piezoelectric
-// speaker on the the BBGame114 board.
-
-
-void Sound::Setup()
-{
-  pinMode(SNDPIN,OUTPUT);
-  tone = 0;
-  duration = 0;
-  noisy = false;
-}
-
-
-void Sound::Update(int counter)
-{
-  if (duration > 0)
+  if (btnWasNotPressed[i] && BtnPressedNow)
   {
-    duration--;
-    analogWrite(SNDPIN,tone);
-    if (noisy && (counter%2 == 0)) 
-      analogWrite(SNDPIN,0);
+    btnWasNotPressed[i] = false;
+    return true;
   }
   else
-    analogWrite(SNDPIN,0);    
+  {
+    if (!BtnPressedNow)
+      btnWasNotPressed[i] = true;
+    return false;
+  }
 }
 
 
-void Sound::StartSound(byte _tone, byte _duration, bool _noisy)
+bool Buttons::BtnDown(byte i)
 {
-  tone = _tone;
-  duration = _duration;
-  noisy = _noisy;
+  ReadButtons();
+  return btnDown[i];
 }
 
 
 //---------- TEXTDISPLAY CLASS ----------
 
 // Purpose: To draw alphanumeric characters and punctuation on the
-// BBGame114 display.
+// BBMatrix54 display.
 
 
 TextDisplay::TextDisplay(Display& _display):
