@@ -1,14 +1,10 @@
+//========== BBMatrix54 Exercise 3 ==========
 
-//========== SEED Electronics/Coding Workshop Exercise ==========
-
-//Purpose: Test 5x4 LED matrix
-//Date: June 22, 2019
-
+// Purpose: Test 5x4 LED matrix
+// Date: July 4, 2019
 
 #include "BBMatrix54.h"
 Display display;
-int d = 100; //ms
-
 
 
 //---------- Setup routine to run once ----------
@@ -16,7 +12,7 @@ int d = 100; //ms
 void setup() 
 {
   //Initialize LED matrix display
-  display.Setup(5,4);
+  display.Setup(5, 4);
 }
 
 
@@ -24,6 +20,8 @@ void setup()
 
 void loop() 
 {
+  int d = 150; //ms
+
   //Flash sequence of horizontal lines
   for(int y = 0; y < 4; y++)
   {
