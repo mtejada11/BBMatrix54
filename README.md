@@ -20,6 +20,6 @@ The [BBMatrix54Lib.zip](https://github.com/mtejada11/BBMatrix54/blob/master/Lib/
 |Ex2  	|[Sequence](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex2_Sequence/Ex2_Sequence.ino) |
 |Ex3  	|[Matrix Test](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex3_Matrix_Test/Ex3_Matrix_Test.ino) |
 |Ex4  	|[Spinner](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex4_Spinner/Ex4_Spinner.ino) |
-|Ex4  	|[Spinner with Buttons](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex4_Spinner_with_Buttons/Ex4_Spinner_with_Buttons.ino) |
+|Ex4b  	|[Spinner with Buttons](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex4b_Spinner_with_Buttons/Ex4b_Spinner_with_Buttons.ino) |
 |Ex5  	|[Counter](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex5_Counter/Ex5_Counter.ino) |
 |Ex6  	|[Scrolling Text](https://github.com/mtejada11/BBMatrix54/blob/master/Exercises/Ex6_Scrolling_Text/Ex6_Scrolling_Text.ino) |
