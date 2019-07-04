@@ -4,11 +4,9 @@ BBMatrix54 is a small LED matrix controlled by an Arduino Nano processor board. 
 
 Instructions for building the BBMatrix54 circuit are available here: [BBMatrix54 Build Instructions](http://bit.ly/2JhGEmI). The BBMatrix54 circuit is based on an earlier project [BBGame114](https://github.com/mtejada11/BBGame114).
 
-<img src="https://github.com/mtejada11/BBMatrix54/raw/doc/Build/BBMatrix54.png" width="65%" alt="BBMatrix54 build diagram">
-*Diagram of BBMatrix54 assembled on 400-point solderless breadboard*
+<img src="https://github.com/mtejada11/BBMatrix54/raw/doc/Build/BBMatrix54.png" width="65%" alt="BBMatrix54 build diagram"> <br>*Diagram of BBMatrix54 assembled on 400-point solderless breadboard*
 
-<img src="https://github.com/mtejada11/BBMatrix54/raw/doc/Build/BBMatrix54%20circuit%20diagram.png" width="65%" alt="BBMatrix54 circuit diagram">
-*Circuit diagram*
+<img src="https://github.com/mtejada11/BBMatrix54/raw/doc/Build/BBMatrix54%20circuit%20diagram.png" width="65%" alt="BBMatrix54 circuit diagram"> <br>*Circuit diagram*
 
 # BBMatrix54 Arduino Library
 
